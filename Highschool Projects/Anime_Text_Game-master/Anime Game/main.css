@@ -1,0 +1,52 @@
+#background{
+    height: 600px;
+    margin: auto;
+    width: 80%;
+    background-image: url(Images/example_background.jpg);
+    background-size:cover;
+}
+#characters{
+    height: 500px;
+    width: 80%;
+    margin: auto;
+    background-image:url(Images/example_guy.png);  
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#header {
+    height: 100px;
+    width: 80%;
+    margin: auto;
+    color:deeppink;
+    font-family: cursive;
+}
+#textBox {
+    height: 100px;
+    width: 80%;
+    margin-left: auto;
+    margin-right:auto;
+    background-image:url("images/textBox_pattern.jpg");
+    background-size: contain;
+    background-repeat: repeat-x;
+    opacity: .8;
+    border-radius: 10%;
+}
+#innerText {
+    background-color:azure;
+    opacity: .78;
+}
+
+
+.spacer{
+    height:70%;
+} .spacer2{height:20px;}
+
+p {
+    font-size: 20px;
+    color: deeppink;
+    font-family: cursive;
+}
+h2{
+    background-color: azure;
+    opacity: .4;
+}

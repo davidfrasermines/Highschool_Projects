@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+
+<html>
+    
+	<head>
+		<title>RPG Game</title>
+        
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="clickerGame.css">
+		
+        <script src="clickerGame.js"></script>
+        
+        <script>
+        </script>
+        
+	</head>
+	<body>
+        <!-- audio from https://www.dl-sounds.com/royalty-free/patakas-world/-->
+        <audio autoplay="true" loop="true" src="Patakas%20World.wav"></audio>
+        
+		<div class="container">
+			<h1 class="text-center">ClickerGame</h1>
+        </div>
+        
+        <button id="cash">$0</button>
+        <br><br>
+        <button id="xpUp">Xp [  0  ]</button>
+        <button id="level">Level [1]</button>
+        <h1></h1>
+        
+        <div class="row gameButtons">
+            <div class="col-xs-4">
+                <h1>Actions</h1>
+                <button onclick="wood(); bleep.play()">Chop Wood</button>
+            </div>
+            <div class="col-xs-4">
+                <h1>Craft</h1>
+                <button id="bench" onclick="workBench(); craftSound.play()">WorkBench $50</button> <br>
+                <button>axe [0]</button> <br>
+                <button>saw [0]</button> <br>
+                <button>Lumber Hut [0]</button> <br>
+                <button>Lumber Mill [0]</button> <br>
+            </div>
+            <div class="col-xs-4">
+                <h1>For Hire</h1>
+                <button id="lumberJack" onclick="lumberJack(); craftSound.play()">Lumber Jack [0] $100</button>
+                
+            </div>
+        </div>
+        
+	</body>
+</html>
+
+

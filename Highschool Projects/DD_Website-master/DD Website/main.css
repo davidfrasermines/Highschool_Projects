@@ -1,0 +1,27 @@
+li {
+    color:white;
+}
+
+a:link {
+    color: white;
+}
+/** Classes **/
+
+.mountainBG {
+    background-image: url(mountains.jpg);
+    background-size: 100%;
+    background-repeat:   no-repeat;
+    background-position: center center;    
+}
+
+.information {
+    background-color: deepskyblue;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.highlighted{
+    background-color:dimgrey
+}

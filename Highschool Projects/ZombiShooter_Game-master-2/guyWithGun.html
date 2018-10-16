@@ -1,0 +1,369 @@
+<html>
+<head>
+<title>Zombie Hord</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/357dc23e34ed6a3646d9278705fc4539ddab665c/chs-js-lib/chs.js"></script>
+    
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+</style>
+
+</head>
+
+<body>
+<h1 class="text-center">Zombie Hord</h1>
+
+
+<div class="row">
+    <div class="col-xs-4"></div>
+    <canvas width="600" height="600" class="codehs-editor-canvas col-xs-4"></canvas>
+    <div class="col-xs-4"></div>
+</div>
+
+
+<script>
+window.onload = function() {
+
+    //guy variables
+var guyHead;
+var guyrEye;
+var guylEye;
+var guyrPupil;
+var guylPupil;
+var guyMouth;
+    //gun variables
+var pistolLR;
+var pistolUD;
+var lookingLeft = false;
+var lookingRight = true;
+    //movement variables
+var gdx = 0;
+var gdy= 0;
+    
+var bulletx;
+var bullety;
+    
+var bulletx2;
+var bullety2;
+
+function start(){
+    
+        pistol = new Rectangle(50, 10);
+        pistol.setColor(Color.black);
+        pistol.setPosition(getWidth()/2, getHeight()/2);
+        pistol.setColor(Color.blue);
+        add(pistol);
+        
+        pThingy = new Rectangle(30, 10);
+        pThingy.setColor(Color.orange);
+        pThingy.setPosition(pistol.getX() + 10, pistol.getY() + 10);
+        add(pThingy);
+        
+        pHandel = new Rectangle(10, 20);
+        pHandel.setColor(Color.red);
+        pHandel.setPosition(pistol.getX(), pistol.getY()+10);
+        add(pHandel);
+    
+        makeGuy();
+    
+        keyDownMethod(keyDown);
+        setTimer(draw, 20);
+        
+        makeZombie();
+        makeZombie();
+        makeZombie();
+        makeZombie();
+        makeZombie();
+        makeZombie();
+        makeZombie();
+    
+        
+}
+
+
+function draw(){
+    
+    
+    //move guy
+    guyHead.move(gdx, gdy);
+    guyrEye.move(gdx, gdy);
+    guylEye.move(gdx, gdy);
+    guyrPupil.move(gdx, gdy);
+    guylPupil.move(gdx, gdy);
+    guyMouth.move(gdx, gdy);
+    
+    //make gun
+    makePistolLR();
+ 
+    
+}
+
+
+function keyDown(e){
+    if (e.keyCode == Keyboard.letter('A')){
+		gdx = -6;
+		gdy = 0;
+        lookingRight = false;
+        lookingLeft = true;
+	}
+	
+	if (e.keyCode == Keyboard.letter('D')){
+		gdx = 6;
+		gdy = 0;
+        lookingRight = true;
+        lookingLeft = false;
+	}
+	
+	if (e.keyCode == Keyboard.letter('W')){
+		gdy = -6;
+		gdx = 0;
+	}
+	
+	if (e.keyCode == Keyboard.letter('S')){
+		gdy = 6;
+		gdx = 0;
+	}
+    if(e.keyCode == Keyboard.SPACE){
+        if (lookingRight == true){
+            var bullet = new Circle(5);
+            bullet.setPosition(pistol.getX() + 50, pistol.getY() + 5);
+            add(bullet);
+            setTimer(moveBullet, 20);
+            function moveBullet(){bullet.move(10, 0); bulletx = bullet.getX(); bullety = bullet.getY();}
+            
+            setTimer(deleteBullet, 200);
+            function deleteBullet(){remove(bullet);}
+            }
+        
+        if (lookingLeft == true){
+            var bullet = new Circle(5);
+            bullet.setPosition(pistol.getX(), pistol.getY() + 5);
+            add(bullet);
+            setTimer(moveBullet, 20);
+            function moveBullet(){bullet.move(-10, 0); bulletx2 = bullet.getX(); bullety2 = bullet.getY();}
+            
+            setTimer(deleteBullet, 200);
+            function deleteBullet(){remove(bullet);}s
+        }
+    }
+}
+    
+function makePistolLR(){
+    
+    if (lookingRight == true){
+        pistol.setPosition(guyHead.getX() + guyHead.getRadius(), guyHead.getY());
+        pThingy.setPosition(pistol.getX() + 10, pistol.getY() + 10);
+        pHandel.setPosition(pistol.getX(), pistol.getY()+10);
+    }
+    if (lookingLeft == true){
+       pistol.setPosition(guyHead.getX() - guyHead.getRadius() - 45, guyHead.getY()); 
+       pThingy.setPosition(pistol.getX() + 10, pistol.getY() + 10);
+       pHandel.setPosition(pistol.getX() + 40, pistol.getY()+10);
+    }
+    if(lookingRight == false && lookingLeft == false){
+        pistol.setPosition(1000, 1000);
+        pThingy.setPosition(pistol.getX() + 10, pistol.getY() + 10);
+        pHandel.setPosition(pistol.getX(), pistol.getY()+10);
+    }
+    
+}
+    
+function makeGuy(){
+    //head
+    guyHead = new Circle(30);
+    guyHead.setPosition(getWidth()/2, getHeight()/2);
+    add(guyHead);
+    //Eyes
+    guyrEye = new Circle(10);
+    guyrEye.setPosition(getWidth()/2 + 12, getHeight()/2 - 5);
+    guyrEye.setColor(Color.white);
+    add(guyrEye);
+    
+    guylEye = new Circle(10);
+    guylEye.setPosition(getWidth()/2 - 12, getHeight()/2 - 5);
+    guylEye.setColor(Color.white);
+    add(guylEye);
+    //Pupils
+    
+    guyrPupil = new Circle(5);
+    guyrPupil.setPosition(getWidth()/2 + 12, getHeight()/2 - 5);
+    add(guyrPupil);
+    
+    guylPupil = new Circle(5);
+    guylPupil.setPosition(getWidth()/2 - 12, getHeight()/2 - 5);
+    add(guylPupil);
+    
+    
+    //Mouth
+    guyMouth = new Rectangle(30, 7);
+    guyMouth.setPosition(getWidth()/2 - 15, getHeight()/2 + 15);
+    guyMouth.setColor(Color.white);
+    add(guyMouth);
+    
+    
+    
+}
+
+function makeZombie(){
+    
+    var zombieHead;
+    var zombierEye;
+    var zombielEye;
+    var zombierPupil;
+    var zombielPupil;
+    var zombieMouth;
+
+    var rx = Randomizer.nextInt(0, getWidth());
+    var ry = Randomizer.nextInt(0, getHeight());
+    
+    var zdx = 0;
+    var zdy = 0;
+    
+    zombieHead = new Circle(30);
+    zombieHead.setPosition(rx, ry);
+    zombieHead.setColor(Color.green);
+    add(zombieHead);
+    //Eyes
+    zombierEye = new Circle(10);
+    zombierEye.setPosition(rx + 12, ry - 5);
+    zombierEye.setColor(Color.red);
+    add(zombierEye);
+    
+    zombielEye = new Circle(10);
+    zombielEye.setPosition(rx - 12, ry - 5);
+    zombielEye.setColor(Color.red);
+    add(zombielEye);
+    //Pupils
+    
+    zombierPupil = new Circle(5);
+    zombierPupil.setPosition(rx + 12, ry - 5);
+    add(zombierPupil);
+    
+    zombielPupil = new Circle(5);
+    zombielPupil.setPosition(rx - 12, ry - 5);
+    add(zombielPupil);
+    
+    
+    //Mouth
+    zombieMouth = new Circle(8);
+    zombieMouth.setPosition(rx, ry + 15);
+    zombieMouth.setColor(Color.black);
+    add(zombieMouth);
+    
+    setTimer(moveZombie, 20);
+    
+    function moveZombie(){
+        
+        if (guyHead.getX() > zombieHead.getX()){
+            zdx = 2;
+        }
+        if (guyHead.getX() < zombieHead.getX()){
+            zdx = - 2;
+        }
+        
+        if (guyHead.getY() > zombieHead.getY()){
+            zdy = 2;
+        }
+        if (guyHead.getY() < zombieHead.getY()){
+            zdy = -2;
+        }
+        
+    zombieHead.move(zdx, zdy);
+    zombierEye.move(zdx, zdy);
+    zombielEye.move(zdx, zdy);
+    zombierPupil.move(zdx, zdy);
+    zombielPupil.move(zdx, zdy);
+    zombieMouth.move(zdx, zdy);
+    
+    }
+    
+    setTimer(collideZombie1, 20);
+    
+    function collideZombie1(){
+    
+    var scolx = false;
+    var scoly = false;
+    
+        if (bulletx + 5 >= zombieHead.getX() - zombieHead.getRadius() && bulletx - 5 <= zombieHead.getX() + zombieHead.getRadius()){
+        scolx = true;
+        }
+            
+        if (bullety + 5 >= zombieHead.getY() - zombieHead.getRadius() && bullety - 5  <= zombieHead.getY() + zombieHead.getRadius()){
+        scoly = true;
+        }
+        
+        if (scolx == false || scoly == false){scolx = false; scoly = false;}
+        
+        if (scolx == true && scoly == true){
+        
+            remove(zombieHead);
+            remove(zombierEye);
+            remove(zombielEye);
+            remove(zombierPupil);
+            remove(zombielPupil);
+            remove(zombieMouth);
+            
+            
+            scolx = false;
+            scoly =false;
+            
+        }
+    }
+    
+    setTimer(collideZombie2, 20);
+    
+    function collideZombie2(){
+    
+    var scolx = false;
+    var scoly = false;
+    
+        if (bulletx2 + 5 >= zombieHead.getX() - zombieHead.getRadius() && bulletx2 - 5 <= zombieHead.getX() + zombieHead.getRadius()){
+        scolx = true;
+        }
+            
+        if (bullety2 + 5 >= zombieHead.getY() - zombieHead.getRadius() && bullety2 - 5  <= zombieHead.getY() + zombieHead.getRadius()){
+        scoly = true;
+        }
+        
+        if (scolx == false || scoly == false){scolx = false; scoly = false;}
+        
+        if (scolx == true && scoly == true){
+        
+            remove(zombieHead);
+            remove(zombierEye);
+            remove(zombielEye);
+            remove(zombierPupil);
+            remove(zombielPupil);
+            remove(zombieMouth);
+            
+            scolx = false;
+            scoly =false;
+            
+            
+        }
+    }
+    
+    
+    
+}
+
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+audio { 
+   display:none;
+}
+
+body{
+    font-family: monospace;
+    background-color: darkseagreen;
+}
+.gameButtons {
+    margin-left: 15px;
+    margin-right: 15px;
+    /*background-image: url("https://static.pexels.com/photos/38136/pexels-photo-38136.jpeg");*/
+    background-color: darkmagenta;
+}
+
+h1{
+    color: skyblue;
+}
+
+button {
+    font-size: 24px;
+}

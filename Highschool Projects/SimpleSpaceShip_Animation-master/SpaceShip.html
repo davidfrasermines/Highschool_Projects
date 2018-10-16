@@ -1,0 +1,218 @@
+<html>
+<head>
+<title>New Sandbox Program</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/1a9cbe7f1221c9f75665ddc9dfeb56c5029ef711/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    background-color: darkslateblue;
+}
+    
+</style>
+
+</head>
+
+<body>
+<h1>Space Ship</h1>
+
+
+
+<canvas
+width="600"
+height="600"
+class="codehs-editor-canvas"></canvas>
+
+<script>
+window.onload = function() {
+    
+    
+    function start(){
+         
+        setTimer(draw, 500)
+        makeShip();
+        
+    }
+    function draw(){    
+        makeStars();
+    }
+    
+    function makeShip(){
+        
+        var head;
+        var body;
+        var connectR;
+        var connectL;
+        var engineR;
+        var engineL;
+        var window1;
+        var window2;
+        var window3;
+
+        var sep1;
+        var sep2;
+        var sep3;
+        var sep4;
+        var sep5;
+        var sep6;
+
+        var sep7;
+        var sep8;
+        var sep9;
+        var sep10;
+        var sep11;
+        
+        //head
+        head = new Circle(75);
+        head.setPosition(getWidth()/2 + 175, getHeight()/2);
+        head.setColor(Color.yellow);
+        add(head);
+        //body
+        body = new Rectangle(350, 150);
+        body.setPosition(getWidth()/2 - 175, getHeight()/2 - 75);
+        body.setColor(Color.red);
+        add(body);
+                    //body seperators Right
+                    sep1 = new Rectangle(20, 40);
+                    sep1.setPosition(getWidth()/2 - 135, getHeight()/2 + 35);
+                    sep1.setColor(Color.orange);
+                    add(sep1);
+                    
+                    sep2 = new Rectangle(20, 30);
+                    sep2.setPosition(getWidth()/2 - 100, getHeight()/2 + 45);
+                    sep2.setColor(Color.orange);
+                    add(sep2);
+        
+                    sep3 = new Rectangle(20, 20);
+                    sep3.setPosition(getWidth()/2 - 65, getHeight()/2 + 55);
+                    sep3.setColor(Color.orange);
+                    add(sep3);
+                    //body seperators Left
+                    sep4 = new Rectangle(20, 40);
+                    sep4.setPosition(getWidth()/2 - 135, getHeight()/2 - 75);
+                    sep4.setColor(Color.orange);
+                    add(sep4);
+                    
+                    sep5 = new Rectangle(20, 30);
+                    sep5.setPosition(getWidth()/2 - 100, getHeight()/2 - 75);
+                    sep5.setColor(Color.orange);
+                    add(sep5);
+        
+                    sep6 = new Rectangle(20, 20);
+                    sep6.setPosition(getWidth()/2 - 65, getHeight()/2 - 75);
+                    sep6.setColor(Color.orange);
+                    add(sep6);
+                    //middle seperator
+                    sep7 = new Rectangle(20, 150);
+                    sep7.setPosition(getWidth()/2, getHeight()/2 - 75);
+                    sep7.setColor(Color.orange);
+                    add(sep7);
+                    //end seperator
+                    sep10 = new Rectangle(20, 150);
+                    sep10.setPosition(getWidth()/2 + 175, getHeight()/2 - 75);
+                    sep10.setColor(Color.orange);
+                    add(sep10);
+        //Windows
+        window1 = new Circle(40);
+        window1.setPosition(getWidth()/2 + 95, getHeight()/2);
+        window1.setColor(Color.yellow);
+        add(window1);
+        
+        //connector Right
+        connectR = new Rectangle(40, 20);
+        connectR.setPosition(getWidth()/2 - 175, getHeight()/2 + 75);
+        connectR.setColor(Color.yellow);
+        add(connectR);
+        //connector Left
+        connectL = new Rectangle(40, 20);
+        connectL.setPosition(getWidth()/2 - 175, getHeight()/2 - 95);
+        connectL.setColor(Color.yellow);
+        add(connectL);
+        //engine Right
+        engineR = new Rectangle(100, 40);
+        engineR.setPosition(getWidth()/2 - 195, getHeight()/2 + 95);
+        engineR.setColor(Color.red);
+                    //seperator engine
+                    sep8 = new Rectangle(20, 40);
+                    sep8.setPosition(getWidth()/2 - 95, getHeight()/2 + 95);
+                    sep8.setColor(Color.orange);
+                    add(sep8);
+                    
+        add(engineR);
+        //engine Left
+        engineL = new Rectangle(100, 40);
+        engineL.setPosition(getWidth()/2 - 195, getHeight()/2 - 135);
+        engineL.setColor(Color.red);
+        add(engineL);
+                    //seperator engine
+                    sep9 = new Rectangle(20, 40);
+                    sep9.setPosition(getWidth()/2 - 95, getHeight()/2 - 135);
+                    sep9.setColor(Color.orange);
+                    add(sep9);
+        
+        
+        
+    }
+    
+    function makeStars(){
+        var star1;
+        var star2;
+        var star3;
+        var star4;
+        var star5;
+        
+        var dx = 4;
+        var dy = 4;
+        
+        star1 = new Circle(Randomizer.nextInt(0, 5));
+        star1.setColor(Color.yellow);
+        star1.setPosition(getWidth(), Randomizer.nextInt(0, getHeight()));
+        add(star1);
+        
+        star2 = new Circle(Randomizer.nextInt(0, 5));
+        star2.setColor(Color.yellow);
+        star2.setPosition(getWidth(), Randomizer.nextInt(0, getHeight()));
+        add(star2);
+        
+        star3 = new Circle(Randomizer.nextInt(0, 5));
+        star3.setColor(Color.yellow);
+        star3.setPosition(getWidth(), Randomizer.nextInt(0, getHeight()));
+        add(star3);
+        
+        star4 = new Circle(Randomizer.nextInt(0, 5));
+        star4.setColor(Color.yellow);
+        star4.setPosition(getWidth(), Randomizer.nextInt(0, getHeight()));
+        add(star4);
+        
+        star5 = new Circle(Randomizer.nextInt(0, 5));
+        star5.setColor(Color.yellow);
+        star5.setPosition(getWidth(), Randomizer.nextInt(0, getHeight()));
+        add(star5);
+        
+        setTimer(moveStars, 2);
+        
+        function moveStars(){
+            star1.move(-dx, 0);
+            star2.move(-dx, 0);
+            star3.move(-dx, 0);
+            star4.move(-dx, 0);
+            star5.move(-dx, 0);
+        }
+        
+    }
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>

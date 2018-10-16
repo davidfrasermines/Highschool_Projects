@@ -1,0 +1,279 @@
+
+<html>
+<head>
+<title>Game</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/3fbf52894ee60a06e4c0f90e4d6cd9d755a32144/chs-js-lib/chs.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster" />
+
+<style>
+    body{
+        background-color: orange;
+        font-family: Lobster;
+    }
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    background-color: darkred;
+}
+
+
+</style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Game</h1>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <button class="btn btn-danger col-xs-3" id="score">Score 0</button>
+            <button class="btn btn-warning col-xs-3" id="highScore">High Score = 0</button>
+            <div class="col-xs-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+        <canvas width="600" height="600" class="codehs-editor-canvas col-xs-6"></canvas>
+            <div class="col-xs-3"></div>
+        </div>
+        <br>
+    </div>
+
+
+
+
+<script>
+    var highscore = 0;
+    var score = 0;
+function changeScore(){
+    score++;
+    var element = document.getElementById("score");
+    element.innerHTML = "score = " + score;
+}
+function gameReset(){
+    if (score > highscore){
+        highscore = score;
+        var element = document.getElementById("highScore");
+        element.innerHTML = "High Score = " + highscore;
+    }
+    score = 0;
+    var element = document.getElementById("score");
+    element.innerHTML = "Score = " + score;
+}    
+window.onload = function() {
+
+var ball; 
+var secondBall;
+    
+var lives = 3;
+
+var lifeOne;
+var lifeTwo;
+var lifeThree;
+    
+var dx = 8;
+var dy = 8;
+
+var dx2 = 0;
+var dy2 = 0;
+    
+var ballCollide = false;
+
+function start(){
+    
+    ball = new Circle(20);
+    ball.setPosition(300, 200);
+    add(ball);
+    
+    secondBall = new Circle(20);
+    secondBall.setPosition(200, 250);
+    secondBall.setColor(Color.orange);
+    add(secondBall);
+    
+    lifeOne = new Circle(10);
+    lifeOne.setPosition(getWidth()-30, 30);
+    lifeOne.setColor(Color.red);
+    add(lifeOne);
+    
+    lifeTwo = new Circle(10);
+    lifeTwo.setPosition(getWidth()-60, 30);
+    lifeTwo.setColor(Color.red);
+    add(lifeTwo);
+    
+    lifeThree = new Circle(10);
+    lifeThree.setPosition(getWidth()-90, 30);
+    lifeThree.setColor(Color.red);
+    add(lifeThree);
+    
+    keyDownMethod(keyDown);
+    
+    setTimer(draw, 20);
+    
+    
+}
+
+//make is collision a function with parameters
+    
+function draw(){
+    
+    checkWalls();
+    checkWalls2();
+    isCol();
+    
+    
+    if (ballCollide == true){
+        ballCollide = false;
+    var xrandom = Randomizer.nextInt(30, getWidth() - 30); 
+    var yrandom = Randomizer.nextInt(30, getHeight() - 30);
+    ball.setPosition(xrandom, yrandom);
+    
+    } else {
+    ball.move(dx, dy);
+    }
+    secondBall.move(dx2, dy2);
+    if (lives == 3){}
+    else if (lives == 2){
+        lifeOne.setPosition(1000, 1000);
+    } else if (lives == 1){
+        lifeTwo.setPosition(1000, 1000);
+    } else if (lives == 0){
+        lifeOne.setPosition(getWidth()-30, 30);
+        lifeTwo.setPosition(getWidth()-60, 30);
+        lifeThree.setPosition(getWidth()-90, 30);
+        lives = 3;
+        gameReset();
+    } 
+    
+}
+
+function keyDown(e){
+	if(e.keyCode == Keyboard.letter('A')){
+		//secondBall.move(-5, 0);
+        dx2 = -6;
+        dy2 = 0;
+	}
+	
+	if(e.keyCode == Keyboard.letter('D')){
+		//secondBall.move(5, 0);
+        dx2 = 6;  
+        dy2 = 0;
+	}
+	
+	if(e.keyCode == Keyboard.letter('W')){
+		//secondBall.move(0, -5);
+        dy2 = -6;
+        dx2 = 0;
+	}
+	
+	if(e.keyCode == Keyboard.letter('S')){
+		//secondBall.move(0, 5);
+        dy2 = 6;
+        dx2 = 0;
+	}
+    
+    if(e.keyCode == Keyboard.RIGHT){
+        var scoly = false;
+        var scolx = false; 
+		var bullet = new Circle(5);
+        bullet.setPosition(secondBall.getX(), secondBall.getY())
+        add(bullet);
+        setTimer(bulletMove, 20);
+        
+        function bulletMove(){
+            
+            bullet.move(10, 0);
+            
+            if (bullet.getX() + bullet.getRadius() >= ball.getX() - ball.getRadius() && bullet.getX() - bullet.getRadius() <= ball.getX() + ball.getRadius()){
+            scolx = true;
+            }
+            
+            if (bullet.getY() + bullet.getRadius() >= ball.getY() - ball.getRadius() && bullet.getY() - bullet.getRadius() <= ball.getY() + ball.getRadius()){
+                scoly = true;
+            }
+             
+            if (scolx == true && scoly == true){
+                ballCollide = true; 
+                changeScore();
+                scolx = false;
+                scoly = false;
+            } else { // you have to reset these because if scolx is true once.. that doesnt mean it is allways
+                scolx = false;
+                scoly = false;
+            }
+        }
+	}
+}
+
+function isCol() {
+    
+    var colx = false;
+    var coly = false;
+    
+    if (ball.getX() + ball.getRadius() >= secondBall.getX() - secondBall.getRadius() && ball.getX() - ball.getRadius() <= secondBall.getX() + secondBall.getRadius()){
+        colx = true;
+    }
+    if (ball.getY() + ball.getRadius() >= secondBall.getY() - secondBall.getRadius() && ball.getY() - ball.getRadius() <= secondBall.getY() + secondBall.getRadius()){
+        coly = true;
+    }
+    if (colx == true && coly == true){
+        dx = -dx;
+        dy = -dy;
+        lives--;
+    }
+    
+}
+    
+function checkWalls(){
+    if (ball.getX() + ball.getRadius() > getWidth()){
+        dx = -dx;
+    }
+    if (ball.getY() + ball.getRadius() > getHeight()){
+        dy = -dy;
+    }
+    if (ball.getX() - ball.getRadius() < 0){
+        dx = -dx;
+    }
+    if(ball.getY() - ball.getRadius() < 0){
+        dy = -dy;
+    }
+    
+}
+
+function checkWalls2(){
+    if ( secondBall.getX() +  secondBall.getRadius() > getWidth()){
+        secondBall.setPosition(getWidth() - 25, secondBall.getY());
+        
+    }
+    if (secondBall.getX() -  secondBall.getRadius() < 0){
+        secondBall.setPosition(20, secondBall.getY());
+        dx2 = 0;
+    }
+    if ( secondBall.getY() +  secondBall.getRadius() > getHeight()){
+        secondBall.setPosition(secondBall.getX(), getHeight() - 20);
+        dy2 = 0;
+    }
+    if(secondBall.getY() - secondBall.getRadius() < 0){
+        secondBall.setPosition(secondBall.getX(), 20);
+        dy2 = 0;
+    }
+    
+}
+
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>
